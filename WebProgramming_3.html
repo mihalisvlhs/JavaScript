@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ενότητα 3: Εισαγωγή στη JavaScript για Αρχάριους</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #38b2ac 0%, #2d3748 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 5px solid #319795;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M 8 0 L 0 0 0 8" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .logo {
+            max-width: 220px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-title {
+            font-size: 2.4em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h1 {
+            color: #2d3748;
+            border-bottom: 4px solid #38b2ac;
+            padding-bottom: 12px;
+            margin: 40px 0 25px 0;
+            font-size: 2.2em;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #38b2ac, #2d3748);
+        }
+
+        h2 {
+            color: #2d3748;
+            margin: 35px 0 20px 0;
+            font-size: 1.6em;
+            background: linear-gradient(135deg, #e6fffa, #b2f5ea);
+            padding: 15px 20px;
+            border-left: 5px solid #38b2ac;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h3 {
+            color: #2c7a7b;
+            margin: 30px 0 15px 0;
+            font-size: 1.4em;
+            border-left: 3px solid #4fd1c7;
+            padding-left: 15px;
+        }
+
+        h4 {
+            color: #2d3748;
+            margin: 25px 0 12px 0;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin: 18px 0;
+            padding-left: 35px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 25px 0;
+            overflow-x: auto;
+            border-left: 5px solid #38b2ac;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            position: relative;
+            white-space: pre-wrap;
+        }
+
+        .code-block::before {
+            content: 'HTML';
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            background: #38b2ac;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .keyword {
+            color: #c678dd;
+            font-weight: bold;
+        }
+
+        .function {
+            color: #61afef;
+        }
+
+        .string {
+            color: #98c379;
+        }
+
+        .number {
+            color: #d19a66;
+        }
+
+        .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .inline-code {
+            background: #e6fffa;
+            color: #234e52;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border: 1px solid #b2f5ea;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #f0fdfa 100%);
+            border: 2px solid #38b2ac;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 6px solid #38b2ac;
+            box-shadow: 0 4px 8px rgba(56, 178, 172, 0.2);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e0f7fa 0%, #f0f9ff 100%);
+            border: 2px solid #0097a7;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 6px solid #0097a7;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%);
+            border: 2px solid #f57c00;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 6px solid #f57c00;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            border: 2px solid #388e3c;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 6px solid #388e3c;
+        }
+
+        .example-card {
+            background: white;
+            border: 2px solid #b2f5ea;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-left: 6px solid #38b2ac;
+        }
+
+        .toc {
+            background: linear-gradient(135deg, #e6fffa 0%, #f0fdfa 100%);
+            border: 2px solid #81e6d9;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .toc h3 {
+            color: #234e52;
+            margin: 0 0 20px 0;
+            font-size: 1.5em;
+            border: none;
+            padding: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            columns: 2;
+            column-gap: 30px;
+        }
+
+        .toc li {
+            margin: 12px 0;
+            padding-left: 25px;
+            position: relative;
+            break-inside: avoid;
+        }
+
+        .toc li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #38b2ac;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .toc a {
+            color: #2c7a7b;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.05em;
+        }
+
+        .toc a:hover {
+            color: #234e52;
+            padding-left: 8px;
+        }
+
+        .live-demo {
+            background: #f0fdfa;
+            border: 2px solid #38b2ac;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .demo-button {
+            background: #38b2ac;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #2c7a7b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(56, 178, 172, 0.3);
+        }
+
+        kbd {
+            background: #2d3748;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border: 1px solid #4a5568;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .toc ul {
+                columns: 1;
+            }
+            
+            .main-title {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="https://ds.uop.gr/sites/default/files/styles/large/public/images/2024-03/logo-ds-el.png?itok=ASurM2gU" alt="Πανεπιστήμιο Πελοποννήσου - Τμήμα Ψηφιακών Συστημάτων" class="logo">
+            <h1 class="main-title">⚡ Ενότητα 3: Εισαγωγή στη JavaScript</h1>
+            <p class="subtitle">Τα πρώτα βήματα στον κόσμο του προγραμματισμού web!</p>
+        </header>
+
+        <div class="content">
+            <div class="toc">
+                <h3>📚 Περιεχόμενα Ενότητας</h3>
+                <ul>
+                    <li><a href="#section-1">3.1 Τι είναι η JavaScript;</a></li>
+                    <li><a href="#section-progressive">Από Στατικό σε Διαδραστικό</a></li>
+                    <li><a href="#section-2">3.2 Πού γράφουμε JavaScript;</a></li>
+                    <li><a href="#section-3">3.3 Το πρώτο μου πρόγραμμα</a></li>
+                    <li><a href="#section-4">3.4 Μεταβλητές</a></li>
+                    <li><a href="#section-5">3.5 Τύποι Δεδομένων</a></li>
+                    <li><a href="#section-6">3.6 Βασικές Πράξεις</a></li>
+                    <li><a href="#section-7">3.7 Συναρτήσεις</a></li>
+                    <li><a href="#section-8">3.8 Διάδραση με τον χρήστη</a></li>
+                </ul>
+            </div>
+
+            <h1 id="section-1">3.1 Τι είναι η JavaScript;</h1>
+
+            <div class="info-box">
+                <h4>💡 Μια απλή εξήγηση</h4>
+                <p>Η <strong>JavaScript</strong> είναι μια γλώσσα προγραμματισμού που κάνει τις ιστοσελίδες <strong>ζωντανές</strong> και <strong>διαδραστικές</strong>!</p>
+                
+                <h4>Σκέψου την ιστοσελίδα σαν ένα σπίτι:</h4>
+                <ul>
+                    <li><strong>HTML</strong> = Τα τούβλα και η δομή του σπιτιού</li>
+                    <li><strong>CSS</strong> = Η βαφή, τα έπιπλα, η διακόσμηση</li>
+                    <li><strong>JavaScript</strong> = Ο ηλεκτρισμός που ανάβει τα φώτα, ανοίγει τις πόρτες!</li>
+                </ul>
+            </div>
+
+            <h2>Τι μπορεί να κάνει η JavaScript;</h2>
+
+            <div class="highlight-box">
+                <h4>✨ Παραδείγματα</h4>
+                <ul>
+                    <li>📱 Να εμφανίσει μηνύματα στον χρήστη</li>
+                    <li>🎯 Να αντιδράσει όταν πατάμε κουμπιά</li>
+                    <li>🎨 Να αλλάξει χρώματα και στυλ δυναμικά</li>
+                    <li>✅ Να ελέγξει αν συμπληρώσαμε σωστά μια φόρμα</li>
+                    <li>🧮 Να κάνει υπολογισμούς</li>
+                    <li>🎮 Να φτιάξει παιχνίδια στον browser</li>
+                    <li>📊 Να δημιουργήσει γραφήματα</li>
+                </ul>
+            </div>
+
+            <h1 id="section-progressive">Προοδευτική Κατανόηση: Από Στατικό σε Διαδραστικό</h1>
+
+            <div class="info-box">
+                <h4>🎯 Τρία στάδια εξέλιξης</h4>
+                <p>Πριν μάθουμε πού γράφουμε JavaScript, ας δούμε πώς μια ιστοσελίδα γίνεται από <strong>στατική</strong> σε <strong>διαδραστική</strong>!</p>
+            </div>
+
+            <div class="example-card">
+                <h4>1️⃣ Μόνο HTML (Χωρίς JavaScript)</h4>
+                <p>Ένα απλό κουμπί που δεν κάνει τίποτα</p>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Μόνο Κουμπί&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Απλό Κουμπί (Χωρίς JavaScript)&lt;/<span class="keyword">h1</span>&gt;
+
+    <span class="comment">&lt;!-- Απλώς εμφανίζει ένα κουμπί --&gt;</span>
+    &lt;<span class="keyword">button</span>&gt;Πάτα με!&lt;/<span class="keyword">button</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" style="cursor: default; background: #cbd5e0;">Πάτα με!</button>
+                    <p style="margin-top: 10px; color: #718096;">🟢 <strong>Τι κάνει:</strong> Απλώς εμφανίζει ένα κουμπί, αλλά δεν συμβαίνει τίποτα όταν το πατήσεις.</p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>2️⃣ HTML με onclick (Χωρίς JavaScript λογική)</h4>
+                <p>Το attribute <span class="inline-code">onclick</span> υπάρχει, αλλά είναι άδειο</p>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Onclick χωρίς JavaScript&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Κουμπί με onclick (Χωρίς JavaScript)&lt;/<span class="keyword">h1</span>&gt;
+
+    <span class="comment">&lt;!-- Το onclick υπάρχει, αλλά δεν έχει καμία εντολή --&gt;</span>
+    &lt;<span class="keyword">button</span> <span class="function">onclick</span>=<span class="string">""</span>&gt;Πάτα με!&lt;/<span class="keyword">button</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" style="cursor: default; background: #ecc94b;" onclick="">Πάτα με!</button>
+                    <p style="margin-top: 10px; color: #744210;">🟡 <strong>Τι κάνει:</strong> Έχει το attribute <span class="inline-code">onclick</span>, αλλά δεν τρέχει τίποτα επειδή είναι άδειο.</p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>3️⃣ HTML με JavaScript (Ενεργή εντολή)</h4>
+                <p>Τώρα το κουμπί εκτελεί πραγματικό κώδικα JavaScript!</p>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Κουμπί με JavaScript&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Κουμπί με JavaScript&lt;/<span class="keyword">h1</span>&gt;
+
+    <span class="comment">&lt;!-- Όταν το πατήσεις, θα εμφανίσει μήνυμα --&gt;</span>
+    &lt;<span class="keyword">button</span> <span class="function">onclick</span>=<span class="string">"alert('Γεια σου!')"</span>&gt;Πάτα με!&lt;/<span class="keyword">button</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="alert('Γεια σου!')">Πάτα με!</button>
+                    <p style="margin-top: 10px; color: #2f855a;">🟣 <strong>Τι κάνει:</strong> Όταν πατήσεις το κουμπί, εκτελείται JavaScript και εμφανίζεται ένα μήνυμα (alert).</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>💡 Η Διαφορά</h4>
+                <ul>
+                    <li><strong>1️⃣ Χωρίς JavaScript:</strong> Το κουμπί είναι απλά διακοσμητικό</li>
+                    <li><strong>2️⃣ Με άδειο onclick:</strong> Υπάρχει η "θύρα" για JavaScript, αλλά δεν υπάρχει κώδικας</li>
+                    <li><strong>3️⃣ Με JavaScript:</strong> Το κουμπί γίνεται ζωντανό και διαδραστικό! ✨</li>
+                </ul>
+            </div>
+
+            <h2>Ποιος κάνει τι;</h2>
+
+            <div class="info-box">
+                <h4>🔍 Ας αναλύσουμε το παράδειγμα 3️⃣</h4>
+                <p>Στο παράδειγμα <span class="inline-code">&lt;button onclick="alert('Γεια σου!')"&gt;Πάτα με!&lt;/button&gt;</span> υπάρχουν τρία μέρη:</p>
+                
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <thead>
+                        <tr style="background: #e6fffa;">
+                            <th style="padding: 12px; border: 2px solid #38b2ac; text-align: left;">Κομμάτι</th>
+                            <th style="padding: 12px; border: 2px solid #38b2ac; text-align: left;">Γλώσσα</th>
+                            <th style="padding: 12px; border: 2px solid #38b2ac; text-align: left;">Τι κάνει</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">&lt;button&gt;...&lt;/button&gt;</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><strong>HTML</strong></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Δημιουργεί κουμπί</td>
+                        </tr>
+                        <tr style="background: #f0fdfa;">
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">onclick="..."</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><strong>HTML attribute</strong> που «μιλάει» στη JavaScript</td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Ορίζει τι θα γίνει όταν γίνει κλικ</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">alert('Γεια σου!')</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><strong>JavaScript</strong></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Εκτελεί εντολή εμφάνισης μηνύματος</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>⚙️ Άλλες εντολές JavaScript (όπως το alert())</h2>
+
+            <div class="highlight-box">
+                <h4>📚 Βασικές ενσωματωμένες εντολές</h4>
+                <p>Η JavaScript έχει πολλές ενσωματωμένες εντολές (συναρτήσεις) που μπορείς να χρησιμοποιήσεις. Μερικές από τις πιο βασικές:</p>
+                
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <thead>
+                        <tr style="background: #e6fffa;">
+                            <th style="padding: 12px; border: 2px solid #38b2ac; text-align: left; width: 35%;">Εντολή</th>
+                            <th style="padding: 12px; border: 2px solid #38b2ac; text-align: left;">Τι κάνει</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">alert('Μήνυμα')</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Εμφανίζει ένα μήνυμα στον χρήστη</td>
+                        </tr>
+                        <tr style="background: #f0fdfa;">
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">console.log('Κάτι')</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Εμφανίζει μήνυμα στην κονσόλα (χρήσιμο για προγραμματιστές)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">prompt('Ερώτηση')</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Ζητά από τον χρήστη να γράψει κάτι σε ένα μικρό παράθυρο</td>
+                        </tr>
+                        <tr style="background: #f0fdfa;">
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">confirm('Σίγουρα;')</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Εμφανίζει μήνυμα με κουμπιά OK/Cancel</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">document.write('Κείμενο')</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Εμφανίζει κείμενο απευθείας στη σελίδα</td>
+                        </tr>
+                        <tr style="background: #f0fdfa;">
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">document.getElementById('id')</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Βρίσκει ένα HTML στοιχείο για να το αλλάξεις με JavaScript</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>🧮 Άλλες "ενέργειες" όπως το onclick</h2>
+
+            <div class="highlight-box">
+                <h4>🎯 HTML Events</h4>
+                <p>Εκτός από το <span class="inline-code">onclick</span>, υπάρχουν πολλά HTML events που ενεργοποιούν JavaScript κώδικα όταν κάτι συμβεί. Μερικά παραδείγματα:</p>
+                
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <thead>
+                        <tr style="background: #e6fffa;">
+                            <th style="padding: 12px; border: 2px solid #38b2ac; text-align: left; width: 30%;">Event</th>
+                            <th style="padding: 12px; border: 2px solid #38b2ac; text-align: left;">Πότε ενεργοποιείται</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">onclick</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Όταν γίνει κλικ</td>
+                        </tr>
+                        <tr style="background: #f0fdfa;">
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">onmouseover</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Όταν ο δείκτης περάσει πάνω από το στοιχείο</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">onmouseout</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Όταν ο δείκτης φύγει από το στοιχείο</td>
+                        </tr>
+                        <tr style="background: #f0fdfa;">
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">onchange</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Όταν αλλάξει η τιμή σε πεδίο φόρμας</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">onkeydown</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Όταν πατηθεί πλήκτρο στο πληκτρολόγιο</td>
+                        </tr>
+                        <tr style="background: #f0fdfa;">
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">onload</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Όταν φορτώσει πλήρως η σελίδα</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="example-card">
+                <h4>📘 Παράδειγμα με onmouseover</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Mouse Events&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Δοκίμασε τα Mouse Events&lt;/<span class="keyword">h1</span>&gt;
+    
+    <span class="comment">&lt;!-- Όταν περάσεις το ποντίκι πάνω, θα εμφανιστεί μήνυμα --&gt;</span>
+    &lt;<span class="keyword">button</span> <span class="function">onmouseover</span>=<span class="string">"alert('Πέρασες το ποντίκι!')"</span>&gt;Δοκίμασε!&lt;/<span class="keyword">button</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onmouseover="alert('Πέρασες το ποντίκι!')">🎯 Πέρασε το ποντίκι πάνω!</button>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>📗 Πολλαπλά Events στο ίδιο στοιχείο</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Πολλαπλά Events&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Κουμπί με πολλά events&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">button</span> 
+        <span class="function">onclick</span>=<span class="string">"alert('Πάτησες το κουμπί!')"</span>
+        <span class="function">onmouseover</span>=<span class="string">"console.log('Το ποντίκι είναι πάνω στο κουμπί')"</span>
+        <span class="function">onmouseout</span>=<span class="string">"console.log('Το ποντίκι έφυγε από το κουμπί')"</span>&gt;
+        Διαδραστικό Κουμπί
+    &lt;/<span class="keyword">button</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" 
+                        onclick="alert('Πάτησες το κουμπί!')"
+                        onmouseover="console.log('Το ποντίκι είναι πάνω στο κουμπί')"
+                        onmouseout="console.log('Το ποντίκι έφυγε από το κουμπί')">
+                        🎯 Διαδραστικό Κουμπί (άνοιξε την κονσόλα F12)
+                    </button>
+                </div>
+            </div>
+
+            <h1 id="section-2">3.2 Πού γράφουμε JavaScript;</h1>
+
+            <div class="info-box">
+                <p>Υπάρχουν <strong>3 τρόποι</strong> να γράψουμε JavaScript, ακριβώς όπως με το CSS!</p>
+            </div>
+
+            <h2>Τρόπος 1: Inline JavaScript</h2>
+
+            <div class="example-card">
+                <h4>📘 Μέσα στα HTML elements</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Inline JavaScript&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Inline JavaScript Παράδειγμα&lt;/<span class="keyword">h1</span>&gt;
+    
+    <span class="comment">&lt;!-- Όταν πατήσεις το κουμπί, θα εμφανιστεί μήνυμα --&gt;</span>
+    &lt;<span class="keyword">button</span> <span class="function">onclick</span>=<span class="string">"alert('Γεια σου!')"</span>&gt;Πάτα με!&lt;/<span class="keyword">button</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <p>⚠️ <strong>Σημείωση:</strong> Όπως και με το CSS, δεν το χρησιμοποιούμε συχνά!</p>
+            </div>
+
+            <h2>Τρόπος 2: Internal JavaScript</h2>
+
+            <div class="example-card">
+                <h4>📗 Μέσα στο &lt;script&gt; tag</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Το πρώτο μου πρόγραμμα&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+
+    &lt;<span class="keyword">h1</span>&gt;Γεια σου JavaScript!&lt;/<span class="keyword">h1</span>&gt;
+
+    <span class="comment">&lt;!-- Η JavaScript γράφεται μέσα στο script tag --&gt;</span>
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Αυτός ο κώδικας θα τρέξει όταν φορτώσει η σελίδα</span>
+        <span class="function">alert</span>(<span class="string">"Καλωσήρθες!"</span>);
+    &lt;/<span class="keyword">script</span>&gt;
+
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+            </div>
+
+            <h2>Τρόπος 3: External JavaScript (Ο καλύτερος!)</h2>
+
+            <div class="example-card">
+                <h4>📕 Σε ξεχωριστό αρχείο .js</h4>
+                
+                <p><strong>Αρχείο: index.html</strong></p>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Εξωτερικό JavaScript&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Γεια σου!&lt;/<span class="keyword">h1</span>&gt;
+
+    <span class="comment">&lt;!-- Συνδέουμε το αρχείο JavaScript --&gt;</span>
+    &lt;<span class="keyword">script</span> <span class="function">src</span>=<span class="string">"script.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <p><strong>Αρχείο: script.js</strong></p>
+                <div class="code-block"><span class="comment">// Όλος ο κώδικας JavaScript εδώ!</span>
+<span class="function">alert</span>(<span class="string">"Γεια από το script.js!"</span>);</div>
+            </div>
+
+            <h1 id="section-3">3.3 Το πρώτο μου πρόγραμμα</h1>
+
+            <div class="highlight-box">
+                <h4>🎯 Ας γράψουμε το πρώτο μας πρόγραμμα!</h4>
+                <p>Κάθε προγραμματιστής ξεκινάει με το κλασικό <strong>"Hello World!"</strong></p>
+            </div>
+
+            <div class="example-card">
+                <h4>📘 Παράδειγμα 1: Μήνυμα στην οθόνη</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Hello World&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Το πρώτο μου πρόγραμμα&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Εμφανίζει ένα μήνυμα popup</span>
+        <span class="function">alert</span>(<span class="string">"Γεια σου Κόσμε!"</span>);
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="alert('Γεια σου Κόσμε!')">🎯 Δοκίμασέ το!</button>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>📗 Παράδειγμα 2: Μήνυμα στην κονσόλα</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Console.log Παράδειγμα&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Μήνυμα στην Κονσόλα&lt;/<span class="keyword">h1</span>&gt;
+    &lt;<span class="keyword">p</span>&gt;Άνοιξε την κονσόλα (F12) για να δεις το μήνυμα!&lt;/<span class="keyword">p</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Εμφανίζει μήνυμα στην κονσόλα του browser</span>
+        <span class="function">console.log</span>(<span class="string">"Γεια σου από την κονσόλα!"</span>);
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="info-box">
+                    <h4>💡 Τι είναι η κονσόλα;</h4>
+                    <p>Η κονσόλα είναι ένα "κρυφό" παράθυρο στον browser όπου οι προγραμματιστές βλέπουν μηνύματα.</p>
+                    <p><strong>Πώς την ανοίγω;</strong></p>
+                    <ul>
+                        <li>Πάτα <kbd>F12</kbd> ή <kbd>Ctrl + Shift + I</kbd></li>
+                        <li>Πήγαινε στην καρτέλα "Console"</li>
+                    </ul>
+                </div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="console.log('Γεια σου από την κονσόλα!'); alert('Έγραψα μήνυμα στην κονσόλα! Άνοιξέ την με F12')">🎯 Γράψε στην κονσόλα!</button>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h4>📝 Πλήρες Παράδειγμα console.log</h4>
+                    <p>Δες πώς γράφουμε ολόκληρο το παράδειγμα με περισσότερες χρήσεις του console.log:</p>
+                    
+                    <div class="code-block" style="margin-top: 15px;">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Παράδειγμα console.log&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Το πρώτο μου πρόγραμμα JavaScript&lt;/<span class="keyword">h1</span>&gt;
+    &lt;<span class="keyword">button</span> <span class="function">onclick</span>=<span class="string">"console.log('Πάτησες το κουμπί!')"</span>&gt;
+        Πάτα με!
+    &lt;/<span class="keyword">button</span>&gt;
+
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Εμφανίζει μήνυμα στην κονσόλα του browser</span>
+        <span class="function">console.log</span>(<span class="string">"Γεια σου από την κονσόλα!"</span>);
+        
+        <span class="comment">// Περισσότερα παραδείγματα:</span>
+        <span class="function">console.log</span>(<span class="string">"Κείμενο"</span>);
+        <span class="function">console.log</span>(<span class="number">42</span>);
+        <span class="function">console.log</span>(<span class="keyword">true</span>);
+        
+        <span class="comment">// Πολλαπλές τιμές</span>
+        <span class="function">console.log</span>(<span class="string">"Το αποτέλεσμα είναι:"</span>, <span class="number">5</span> + <span class="number">3</span>);
+        
+        <span class="comment">// Με μεταβλητές</span>
+        <span class="keyword">let</span> name = <span class="string">"Μαρία"</span>;
+        <span class="function">console.log</span>(<span class="string">"Γεια σου"</span>, name);
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                    <p style="margin-top: 15px;"><strong>💡 Συμβουλή:</strong> Αποθήκευσε αυτόν τον κώδικα σε ένα αρχείο <span class="inline-code">.html</span> και άνοιξέ το στον browser. Μετά πάτα <kbd>F12</kbd> για να δεις τα μηνύματα στην κονσόλα!</p>
+                </div>
+            </div>
+
+            <h1 id="section-4">3.4 Μεταβλητές</h1>
+
+            <div class="info-box">
+                <h4>💡 Τι είναι οι μεταβλητές;</h4>
+                <p>Οι <strong>μεταβλητές</strong> είναι σαν "κουτιά" που αποθηκεύουμε τιμές!</p>
+                <p>Φαντάσου ότι έχεις ένα κουτί με όνομα "ηλικία" και μέσα βάζεις τον αριθμό 20.</p>
+            </div>
+
+            <h2>Πώς δημιουργούμε μεταβλητές</h2>
+
+            <div class="highlight-box">
+                <h4>🔑 Οι 3 τρόποι</h4>
+                <ul>
+                    <li><span class="inline-code">let</span> → Για μεταβλητές που μπορούν να αλλάξουν (χρησιμοποιούμε αυτό!)</li>
+                    <li><span class="inline-code">const</span> → Για σταθερές (δεν μπορούν να αλλάξουν)</li>
+                    <li><span class="inline-code">var</span> → Παλιός τρόπος (δεν τον χρησιμοποιούμε πια)</li>
+                </ul>
+            </div>
+
+            <div class="example-card">
+                <h4>📘 Παραδείγματα</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Μεταβλητές&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Παράδειγμα Μεταβλητών&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Δημιουργούμε μεταβλητή</span>
+        <span class="keyword">let</span> onoma = <span class="string">"Γιάννης"</span>;
+        <span class="keyword">let</span> ilikia = <span class="number">20</span>;
+
+        <span class="comment">// Εμφανίζουμε τις τιμές</span>
+        <span class="function">console.log</span>(onoma);    <span class="comment">// Γιάννης</span>
+        <span class="function">console.log</span>(ilikia);   <span class="comment">// 20</span>
+
+        <span class="comment">// Αλλάζουμε τιμή</span>
+        ilikia = <span class="number">21</span>;
+        <span class="function">console.log</span>(ilikia);   <span class="comment">// 21</span>
+
+        <span class="comment">// Σταθερά (δεν μπορεί να αλλάξει)</span>
+        <span class="keyword">const</span> PI = <span class="number">3.14</span>;
+        <span class="function">console.log</span>(PI);       <span class="comment">// 3.14</span>
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        let onoma = 'Γιάννης';
+                        let ilikia = 20;
+                        alert('Όνομα: ' + onoma + ', Ηλικία: ' + ilikia);
+                        ilikia = 21;
+                        alert('Νέα ηλικία: ' + ilikia);
+                    ">🎯 Δοκίμασε μεταβλητές!</button>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Κανόνες για ονόματα μεταβλητών</h4>
+                <ul>
+                    <li>✅ Μπορούν να περιέχουν γράμματα, αριθμούς, _ και $</li>
+                    <li>✅ <span class="inline-code">let onoma</span>, <span class="inline-code">let ilikia1</span>, <span class="inline-code">let _test</span></li>
+                    <li>❌ ΔΕΝ μπορούν να ξεκινούν με αριθμό</li>
+                    <li>❌ <span class="inline-code">let 1test</span> (ΛΑΘΟΣ!)</li>
+                    <li>❌ ΔΕΝ μπορούν να έχουν κενά</li>
+                    <li>❌ <span class="inline-code">let my name</span> (ΛΑΘΟΣ!)</li>
+                </ul>
+            </div>
+
+            <h1 id="section-5">3.5 Τύποι Δεδομένων</h1>
+
+            <div class="info-box">
+                <h4>💡 Τι είδους τιμές μπορούμε να αποθηκεύσουμε;</h4>
+                <p>Υπάρχουν διάφοροι τύποι δεδομένων στη JavaScript!</p>
+            </div>
+
+            <h2>Οι βασικοί τύποι</h2>
+
+            <div class="example-card">
+                <h4>📘 Παράδειγμα με όλους τους τύπους</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Τύποι Δεδομένων&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Τύποι Δεδομένων στη JavaScript&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// 1. String (Κείμενο)</span>
+        <span class="keyword">let</span> onoma = <span class="string">"Μαρία"</span>;
+        <span class="keyword">let</span> poli = <span class="string">'Αθήνα'</span>;
+        <span class="keyword">let</span> minima = <span class="string">"Γεια σου!"</span>;
+
+        <span class="comment">// 2. Number (Αριθμοί)</span>
+        <span class="keyword">let</span> ilikia = <span class="number">25</span>;
+        <span class="keyword">let</span> timi = <span class="number">19.99</span>;
+        <span class="keyword">let</span> thermokrasia = <span class="number">-5</span>;
+
+        <span class="comment">// 3. Boolean (Αληθές/Ψευδές)</span>
+        <span class="keyword">let</span> einaiEnilikos = <span class="keyword">true</span>;
+        <span class="keyword">let</span> exeiDiplwma = <span class="keyword">false</span>;
+
+        <span class="comment">// Εμφάνιση στην κονσόλα</span>
+        <span class="function">console.log</span>(<span class="string">"String:"</span>, onoma, <span class="string">"τύπος:"</span>, <span class="keyword">typeof</span> onoma);
+        <span class="function">console.log</span>(<span class="string">"Number:"</span>, ilikia, <span class="string">"τύπος:"</span>, <span class="keyword">typeof</span> ilikia);
+        <span class="function">console.log</span>(<span class="string">"Boolean:"</span>, einaiEnilikos, <span class="string">"τύπος:"</span>, <span class="keyword">typeof</span> einaiEnilikos);
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        let onoma = 'Νίκος';
+                        let ilikia = 22;
+                        let einaiSpoydastis = true;
+                        alert('Όνομα: ' + onoma + ' (τύπος: ' + typeof onoma + ')\\n' +
+                              'Ηλικία: ' + ilikia + ' (τύπος: ' + typeof ilikia + ')\\n' +
+                              'Είναι σπουδαστής; ' + einaiSpoydastis + ' (τύπος: ' + typeof einaiSpoydastis + ')');
+                    ">🎯 Δείξε τύπους!</button>
+                </div>
+            </div>
+
+            <h1 id="section-6">3.6 Βασικές Πράξεις</h1>
+
+            <h2>Αριθμητικές Πράξεις</h2>
+
+            <div class="example-card">
+                <h4>📘 Μαθηματικά</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Αριθμητικές Πράξεις&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Μαθηματικές Πράξεις&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="keyword">let</span> a = <span class="number">10</span>;
+        <span class="keyword">let</span> b = <span class="number">3</span>;
+
+        <span class="function">console.log</span>(a + b);   <span class="comment">// 13 (πρόσθεση)</span>
+        <span class="function">console.log</span>(a - b);   <span class="comment">// 7  (αφαίρεση)</span>
+        <span class="function">console.log</span>(a * b);   <span class="comment">// 30 (πολλαπλασιασμός)</span>
+        <span class="function">console.log</span>(a / b);   <span class="comment">// 3.333... (διαίρεση)</span>
+        <span class="function">console.log</span>(a % b);   <span class="comment">// 1  (υπόλοιπο)</span>
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        let a = 10, b = 3;
+                        alert('10 + 3 = ' + (a+b) + '\\n' +
+                              '10 - 3 = ' + (a-b) + '\\n' +
+                              '10 × 3 = ' + (a*b) + '\\n' +
+                              '10 ÷ 3 = ' + (a/b).toFixed(2));
+                    ">🎯 Κάνε πράξεις!</button>
+                </div>
+            </div>
+
+            <h2>Ενώνω κείμενα (Concatenation)</h2>
+
+            <div class="example-card">
+                <h4>📗 Συνδυασμός strings</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Ένωση Κειμένων&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Συνδυασμός Strings&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="keyword">let</span> onoma = <span class="string">"Ελένη"</span>;
+        <span class="keyword">let</span> epitheto = <span class="string">"Παπαδοπούλου"</span>;
+
+        <span class="comment">// Τρόπος 1: Με +</span>
+        <span class="keyword">let</span> pliroNoma = onoma + <span class="string">" "</span> + epitheto;
+        <span class="function">console.log</span>(pliroNoma);  <span class="comment">// Ελένη Παπαδοπούλου</span>
+
+        <span class="comment">// Τρόπος 2: Template literals (πιο εύκολος!)</span>
+        <span class="keyword">let</span> minima = <span class="string">`Γεια σου, </span>${onoma}<span class="string">!`</span>;
+        <span class="function">console.log</span>(minima);     <span class="comment">// Γεια σου, Ελένη!</span>
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        let onoma = 'Ελένη';
+                        let epitheto = 'Παπαδοπούλου';
+                        let pliroNoma = onoma + ' ' + epitheto;
+                        alert('Πλήρες όνομα: ' + pliroNoma);
+                    ">🎯 Ένωσε κείμενα!</button>
+                </div>
+            </div>
+
+            <h2>🔹 Τρόπος 1: Με τον τελεστή `+`</h2>
+
+            <div class="example-card">
+                <h4>📘 Concatenation με +</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Concatenation με +&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Ένωση κειμένων με +&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="keyword">let</span> onoma = <span class="string">"Ελένη"</span>;
+        <span class="keyword">let</span> epitheto = <span class="string">"Παπαδοπούλου"</span>;
+        <span class="keyword">let</span> pliroNoma = onoma + <span class="string">" "</span> + epitheto;
+        
+        <span class="function">console.log</span>(pliroNoma); <span class="comment">// Ελένη Παπαδοπούλου</span>
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="highlight-box">
+                    <h4>➤ Τι κάνει:</h4>
+                    <ul>
+                        <li>Ο τελεστής <span class="inline-code">+</span> ενώνει (concatenates) συμβολοσειρές (strings).</li>
+                        <li>Ανάμεσα σε δύο strings, τα βάζει κολλητά.</li>
+                        <li>Εδώ προσθέτουμε και ένα κενό <span class="inline-code">" "</span> για να μην κολλήσουν τα ονόματα.</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>➤ Σημείωση:</h4>
+                    <p>Αυτός ο τρόπος λειτουργεί πάντα, αλλά όταν έχεις πολλά strings ή μεταβλητές, γίνεται λίγο κουραστικός να βάζεις συνεχώς <span class="inline-code">+</span> και <span class="inline-code">" "</span>.</p>
+                </div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        let onoma = 'Ελένη';
+                        let epitheto = 'Παπαδοπούλου';
+                        let pliroNoma = onoma + ' ' + epitheto;
+                        alert('Πλήρες όνομα: ' + pliroNoma);
+                    ">🎯 Δοκίμασε τον τελεστή +</button>
+                </div>
+            </div>
+
+            <h2>🔹 Τρόπος 2: Με Template Literals (νεότερος, πιο εύχρηστος)</h2>
+
+            <div class="example-card">
+                <h4>📗 Template Literals</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Template Literals&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Ένωση κειμένων με Template Literals&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="keyword">let</span> onoma = <span class="string">"Ελένη"</span>;
+        <span class="keyword">let</span> minima = <span class="string">`Γεια σου, </span>${onoma}<span class="string">!`</span>;
+        
+        <span class="function">console.log</span>(minima); <span class="comment">// Γεια σου, Ελένη!</span>
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="highlight-box">
+                    <h4>➤ Τι κάνει:</h4>
+                    <ul>
+                        <li>Χρησιμοποιεί backticks (αυτά: <span class="inline-code">`</span>, όχι απλά μονά εισαγωγικά <span class="inline-code">'</span>).</li>
+                        <li>Μέσα στα backticks, μπορείς να "βάλεις" μεταβλητές ή εκφράσεις μέσα σε <span class="inline-code">${ }</span>.</li>
+                        <li>Η JavaScript θα τις αντικαταστήσει αυτόματα με την τιμή τους.</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <h4>➤ Πλεονεκτήματα:</h4>
+                    <ul>
+                        <li>✅ Πολύ πιο καθαρός και αναγνώσιμος κώδικας.</li>
+                        <li>✅ Μπορείς να γράφεις πολλαπλές γραμμές χωρίς <span class="inline-code">\n</span>.</li>
+                        <li>✅ Μπορείς να βάζεις εκφράσεις, όχι μόνο μεταβλητές:</li>
+                    </ul>
+                </div>
+
+                <div class="code-block"><span class="keyword">let</span> a = <span class="number">5</span>, b = <span class="number">3</span>;
+<span class="function">console.log</span>(<span class="string">`Το άθροισμα είναι </span>${a + b}<span class="string">`</span>); <span class="comment">// Το άθροισμα είναι 8</span></div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        let onoma = 'Ελένη';
+                        let minima = `Γεια σου, ${onoma}!`;
+                        alert(minima);
+                        let a = 5, b = 3;
+                        alert(`Το άθροισμα των ${a} και ${b} είναι ${a + b}`);
+                    ">🎯 Δοκίμασε Template Literals</button>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>✨ Συνοψίζοντας:</h4>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <thead>
+                        <tr style="background: #38b2ac; color: white;">
+                            <th style="padding: 12px; border: 1px solid #2c7a7b;">Μέθοδος</th>
+                            <th style="padding: 12px; border: 1px solid #2c7a7b;">Παράδειγμα</th>
+                            <th style="padding: 12px; border: 1px solid #2c7a7b;">Πλεονεκτήματα</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f0fdfa;">
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">+</span> (παραδοσιακός τρόπος)</td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">"Γεια " + onoma</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Απλός, υποστηρίζεται παντού</td>
+                        </tr>
+                        <tr style="background: #e6fffa;">
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Template literals (<span class="inline-code">${}</span>)</td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;"><span class="inline-code">`Γεια ${onoma}`</span></td>
+                            <td style="padding: 10px; border: 1px solid #b2f5ea;">Πιο καθαρός, ευέλικτος, υποστηρίζει εκφράσεις και πολλαπλές γραμμές</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h1 id="section-7">3.7 Συναρτήσεις</h1>
+
+            <div class="info-box">
+                <h4>💡 Τι είναι οι συναρτήσεις;</h4>
+                <p>Οι <strong>συναρτήσεις</strong> είναι "κουτιά κώδικα" που μπορούμε να χρησιμοποιήσουμε ξανά και ξανά!</p>
+                <p>Αντί να γράφουμε τον ίδιο κώδικα πολλές φορές, τον γράφουμε μία φορά σε μια συνάρτηση.</p>
+            </div>
+
+            <div class="example-card">
+                <h4>📘 Δημιουργία συνάρτησης</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Συναρτήσεις&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Παράδειγμα Συνάρτησης&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Δημιουργούμε μια συνάρτηση</span>
+        <span class="keyword">function</span> <span class="function">poiLeia</span>() {
+            <span class="function">console.log</span>(<span class="string">"Γεια σου!"</span>);
+            <span class="function">console.log</span>(<span class="string">"Τι κάνεις;"</span>);
+        }
+
+        <span class="comment">// Καλούμε (τρέχουμε) τη συνάρτηση</span>
+        <span class="function">poiLeia</span>();  <span class="comment">// Θα εμφανίσει τα μηνύματα</span>
+        <span class="function">poiLeia</span>();  <span class="comment">// Μπορούμε να την καλέσουμε όσες φορές θέλουμε!</span>
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+            </div>
+
+            <h2>Συναρτήσεις με παραμέτρους</h2>
+
+            <div class="example-card">
+                <h4>📗 Παράδειγμα με παραμέτρους</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Συναρτήσεις με Παραμέτρους&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Συναρτήσεις με Παραμέτρους&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Συνάρτηση που δέχεται παραμέτρους</span>
+        <span class="keyword">function</span> <span class="function">poiGeia</span>(onoma) {
+            <span class="function">console.log</span>(<span class="string">"Γεια σου, "</span> + onoma + <span class="string">"!"</span>);
+        }
+
+        <span class="comment">// Καλούμε με διαφορετικά ονόματα</span>
+        <span class="function">poiGeia</span>(<span class="string">"Γιώργος"</span>);  <span class="comment">// Γεια σου, Γιώργος!</span>
+        <span class="function">poiGeia</span>(<span class="string">"Μαρία"</span>);    <span class="comment">// Γεια σου, Μαρία!</span>
+
+        <span class="comment">// Συνάρτηση με πολλές παραμέτρους</span>
+        <span class="keyword">function</span> <span class="function">prosthese</span>(a, b) {
+            <span class="keyword">let</span> apotelesma = a + b;
+            <span class="function">console.log</span>(a + <span class="string">" + "</span> + b + <span class="string">" = "</span> + apotelesma);
+        }
+
+        <span class="function">prosthese</span>(<span class="number">5</span>, <span class="number">3</span>);   <span class="comment">// 5 + 3 = 8</span>
+        <span class="function">prosthese</span>(<span class="number">10</span>, <span class="number">20</span>); <span class="comment">// 10 + 20 = 30</span>
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        function poiGeia(onoma) {
+                            alert('Γεια σου, ' + onoma + '!');
+                        }
+                        poiGeia('Φίλε μου');
+                    ">🎯 Καλέσε συνάρτηση!</button>
+                </div>
+            </div>
+
+            <h2>Συναρτήσεις που επιστρέφουν τιμή</h2>
+
+            <div class="example-card">
+                <h4>📕 Return</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Συναρτήσεις με Return&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Συνάρτηση που Επιστρέφει Τιμή&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Συνάρτηση που επιστρέφει αποτέλεσμα</span>
+        <span class="keyword">function</span> <span class="function">pollaplasiasmos</span>(a, b) {
+            <span class="keyword">return</span> a * b;
+        }
+
+        <span class="keyword">let</span> apotelesma = <span class="function">pollaplasiasmos</span>(<span class="number">4</span>, <span class="number">5</span>);
+        <span class="function">console.log</span>(apotelesma);  <span class="comment">// 20</span>
+
+        <span class="comment">// Μπορούμε να το χρησιμοποιήσουμε απευθείας</span>
+        <span class="function">console.log</span>(<span class="function">pollaplasiasmos</span>(<span class="number">3</span>, <span class="number">7</span>));  <span class="comment">// 21</span>
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        function pollaplasiasmos(a, b) {
+                            return a * b;
+                        }
+                        let result = pollaplasiasmos(6, 7);
+                        alert('6 × 7 = ' + result);
+                    ">🎯 Δοκίμασε return!</button>
+                </div>
+            </div>
+
+            <h1 id="section-8">3.8 Διάδραση με τον χρήστη</h1>
+
+            <div class="info-box">
+                <h4>💡 Τρόποι επικοινωνίας</h4>
+                <p>Μπορούμε να "μιλήσουμε" με τον χρήστη με διάφορους τρόπους!</p>
+            </div>
+
+            <h2>1. Εμφάνιση μηνύματος (alert)</h2>
+
+            <div class="example-card">
+                <h4>📘 alert()</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Alert Παράδειγμα&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Μήνυμα Alert&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Εμφανίζει popup με μήνυμα</span>
+        <span class="function">alert</span>(<span class="string">"Καλωσήρθες στην ιστοσελίδα μου!"</span>);
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="alert('Καλωσήρθες!')">🎯 Δείξε μήνυμα!</button>
+                </div>
+            </div>
+
+            <h2>2. Ρώτησε τον χρήστη (prompt)</h2>
+
+            <div class="example-card">
+                <h4>📗 prompt()</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Prompt Παράδειγμα&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Ερώτηση με Prompt&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Ρωτάει και παίρνει απάντηση</span>
+        <span class="keyword">let</span> onoma = <span class="function">prompt</span>(<span class="string">"Πώς σε λένε;"</span>);
+        <span class="function">alert</span>(<span class="string">"Γεια σου, "</span> + onoma + <span class="string">"!"</span>);
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        let onoma = prompt('Πώς σε λένε;');
+                        if (onoma) {
+                            alert('Γεια σου, ' + onoma + '!');
+                        }
+                    ">🎯 Ρώτησε το όνομα!</button>
+                </div>
+            </div>
+
+            <h2>3. Ερώτηση Ναι/Όχι (confirm)</h2>
+
+            <div class="example-card">
+                <h4>📕 confirm()</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Confirm Παράδειγμα&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Ερώτηση Ναι/Όχι&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Ρωτάει και επιστρέφει true ή false</span>
+        <span class="keyword">let</span> apantisi = <span class="function">confirm</span>(<span class="string">"Είσαι σίγουρος;"</span>);
+
+        <span class="keyword">if</span> (apantisi) {
+            <span class="function">alert</span>(<span class="string">"Είπες ΝΑΙ!"</span>);
+        } <span class="keyword">else</span> {
+            <span class="function">alert</span>(<span class="string">"Είπες ΟΧΙ!"</span>);
+        }
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        let apantisi = confirm('Σου αρέσει η JavaScript;');
+                        if (apantisi) {
+                            alert('Υπέροχα! 🎉');
+                        } else {
+                            alert('Θα τη μάθεις και θα την αγαπήσεις! 💪');
+                        }
+                    ">🎯 Κάνε ερώτηση!</button>
+                </div>
+            </div>
+
+            <h2>4. Πρακτικό Παράδειγμα</h2>
+
+            <div class="example-card">
+                <h4>🎮 Μίνι Πρόγραμμα</h4>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;<span class="keyword">html</span> lang=<span class="string">"el"</span>&gt;
+&lt;<span class="keyword">head</span>&gt;
+    &lt;<span class="keyword">meta</span> charset=<span class="string">"UTF-8"</span>&gt;
+    &lt;<span class="keyword">title</span>&gt;Έλεγχος Ηλικίας&lt;/<span class="keyword">title</span>&gt;
+&lt;/<span class="keyword">head</span>&gt;
+&lt;<span class="keyword">body</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;Πρόγραμμα Ελέγχου Ηλικίας&lt;/<span class="keyword">h1</span>&gt;
+    
+    &lt;<span class="keyword">script</span>&gt;
+        <span class="comment">// Ρωτάμε το όνομα</span>
+        <span class="keyword">let</span> onoma = <span class="function">prompt</span>(<span class="string">"Πώς σε λένε;"</span>);
+
+        <span class="comment">// Ρωτάμε την ηλικία</span>
+        <span class="keyword">let</span> ilikia = <span class="function">prompt</span>(<span class="string">"Πόσο χρονών είσαι;"</span>);
+
+        <span class="comment">// Ελέγχουμε αν είναι ενήλικας</span>
+        <span class="keyword">if</span> (ilikia >= <span class="number">18</span>) {
+            <span class="function">alert</span>(<span class="string">"Γεια σου "</span> + onoma + <span class="string">"! Είσαι ενήλικας."</span>);
+        } <span class="keyword">else</span> {
+            <span class="function">alert</span>(<span class="string">"Γεια σου "</span> + onoma + <span class="string">"! Είσαι ανήλικος."</span>);
+        }
+    &lt;/<span class="keyword">script</span>&gt;
+&lt;/<span class="keyword">body</span>&gt;
+&lt;/<span class="keyword">html</span>&gt;</div>
+
+                <div class="live-demo">
+                    <button class="demo-button" onclick="
+                        let onoma = prompt('Πώς σε λένε;');
+                        if (!onoma) { alert('Δεν έδωσες όνομα!'); return; }
+                        let ilikia = prompt('Πόσο χρονών είσαι;');
+                        if (!ilikia) { alert('Δεν έδωσες ηλικία!'); return; }
+                        if (ilikia >= 18) {
+                            alert('Γεια σου ' + onoma + '! Είσαι ενήλικας.');
+                        } else {
+                            alert('Γεια σου ' + onoma + '! Είσαι ανήλικος.');
+                        }
+                    ">🎯 Τρέξε το πρόγραμμα!</button>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <h4>🎉 Συγχαρητήρια!</h4>
+                <p>Μόλις έμαθες τα βασικά της JavaScript!</p>
+                <p><strong>Τι μπορείς να κάνεις τώρα:</strong></p>
+                <ul>
+                    <li>✅ Να γράφεις μεταβλητές</li>
+                    <li>✅ Να κάνεις πράξεις</li>
+                    <li>✅ Να φτιάχνεις συναρτήσεις</li>
+                    <li>✅ Να επικοινωνείς με τον χρήστη</li>
+                </ul>
+                <p>Στην επόμενη ενότητα θα μάθουμε πιο προχωρημένα πράγματα όπως <strong>loops</strong>, <strong>arrays</strong> και <strong>DOM manipulation</strong>!</p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

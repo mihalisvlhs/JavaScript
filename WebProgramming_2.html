@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ενότητα 2: Εισαγωγή στην HTML και CSS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 5px solid #1c4966;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .logo {
+            max-width: 220px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-title {
+            font-size: 2.4em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h1 {
+            color: #3498db;
+            border-bottom: 4px solid #2980b9;
+            padding-bottom: 12px;
+            margin: 40px 0 25px 0;
+            font-size: 2.2em;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+
+        h2 {
+            color: #2d3748;
+            margin: 35px 0 20px 0;
+            font-size: 1.6em;
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 15px 20px;
+            border-left: 5px solid #3498db;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h3 {
+            color: #4a5568;
+            margin: 30px 0 15px 0;
+            font-size: 1.4em;
+            border-left: 3px solid #38b2ac;
+            padding-left: 15px;
+        }
+
+        h4 {
+            color: #2d3748;
+            margin: 25px 0 12px 0;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin: 18px 0;
+            padding-left: 35px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 25px 0;
+            overflow-x: auto;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            position: relative;
+            white-space: pre;
+        }
+
+        .code-block::before {
+            content: 'HTML/CSS';
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            background: #3498db;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .code-block .tag {
+            color: #ff6b9d;
+        }
+
+        .code-block .attr {
+            color: #5eead4;
+        }
+
+        .code-block .value {
+            color: #fbbf24;
+        }
+
+        .code-block .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-block .text {
+            color: #e2e8f0;
+        }
+
+        .code-block .keyword {
+            color: #c084fc;
+        }
+
+        .inline-code {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ff6b9d;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border: 1px solid #334155;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:nth-child(even) {
+            background: linear-gradient(135deg, #f8f9fa, #f1f3f4);
+        }
+
+        tr:hover {
+            background: linear-gradient(135deg, #e6f3ff, #f0f8ff);
+            transform: scale(1.01);
+            transition: all 0.3s ease;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #e6f3ff 0%, #f0f8ff 100%);
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 6px solid #3498db;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+        }
+
+        .highlight-box h4 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .pros {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+            border: 2px solid #38a169;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 6px solid #38a169;
+        }
+
+        .cons {
+            background: linear-gradient(135deg, #fed7d7 0%, #fbb6ce 100%);
+            border: 2px solid #e53e3e;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 6px solid #e53e3e;
+        }
+
+        .pros h4 {
+            color: #2f855a;
+            margin-top: 0;
+        }
+
+        .cons h4 {
+            color: #c53030;
+            margin-top: 0;
+        }
+
+        .timeline {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 6px solid #3498db;
+        }
+
+        .timeline h4 {
+            color: #2b6cb0;
+            margin-top: 0;
+        }
+
+        .timeline ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .timeline li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .timeline li::before {
+            content: '📅';
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .architecture-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 2px solid #f39c12;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 6px solid #f39c12;
+        }
+
+        .architecture-box h4 {
+            color: #b7950b;
+            margin-top: 0;
+        }
+
+        .protocol-box {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 6px solid #28a745;
+        }
+
+        .protocol-box h4 {
+            color: #155724;
+            margin-top: 0;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 8px 16px rgba(52, 152, 219, 0.3);
+            text-align: center;
+        }
+
+        .summary h2 {
+            background: none;
+            border: none;
+            color: white;
+            margin-bottom: 20px;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        .summary ul {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .exercises {
+            background: linear-gradient(135deg, #fef5e7 0%, #fff5d6 100%);
+            border: 2px solid #ed8936;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 35px 0;
+            border-left: 6px solid #ed8936;
+        }
+
+        .exercises h3, .exercises h4 {
+            color: #c05621;
+            margin-top: 0;
+        }
+
+        .toc {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #6c757d;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .toc h3 {
+            color: #495057;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            border: none;
+            padding: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            columns: 2;
+            column-gap: 30px;
+        }
+
+        .toc li {
+            padding: 8px 0;
+            border-bottom: 1px dotted #6c757d;
+            break-inside: avoid;
+        }
+
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        .live-example {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #17a2b8;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 6px solid #17a2b8;
+        }
+
+        .live-example h4 {
+            color: #117a8b;
+            margin-top: 0;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 8px 20px;
+            font-size: 0.9em;
+            border-top: 1px solid #34495e;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #fff9e6 0%, #fffaed 100%);
+            border: 3px solid #f39c12;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 8px solid #f39c12;
+            box-shadow: 0 6px 12px rgba(243, 156, 18, 0.2);
+        }
+
+        .intro-section h2 {
+            color: #d68910;
+            background: none;
+            border: none;
+            margin-top: 0;
+            padding: 0;
+            box-shadow: none;
+            font-size: 1.8em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .info-card {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(52, 152, 219, 0.3);
+        }
+
+        .info-card h4 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .pros-cons, .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .toc ul {
+                columns: 1;
+            }
+            
+            .main-title {
+                font-size: 1.8em;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+
+        @media print {
+            .container {
+                box-shadow: none;
+            }
+            
+            .header {
+                background: #3498db !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="https://ds.uop.gr/sites/default/files/styles/large/public/images/2024-03/logo-ds-el.png?itok=ASurM2gU" alt="Πανεπιστήμιο Πελοποννήσου - Τμήμα Ψηφιακών Συστημάτων" class="logo">
+            <h1 class="main-title">🎨 Ενότητα 2: Εισαγωγή στην HTML και CSS</h1>
+            <p class="subtitle">Δομή ιστοσελίδων, Στοιχεία HTML, Στυλ και Διάταξη με CSS</p>
+        </header>
+
+        <div class="content">
+            <div class="toc">
+                <h3>📚 Περιεχόμενα Ενότητας</h3>
+                <ul>
+                    <li><a href="#section-1">2.1 Εισαγωγή στην HTML</a></li>
+                    <li><a href="#section-2">2.2 Βασικά Στοιχεία HTML</a></li>
+                    <li><a href="#section-3">2.3 Inline CSS με το attribute style</a></li>
+                    <li><a href="#section-4">2.4 Εσωτερικό CSS (Internal CSS)</a></li>
+                    <li><a href="#section-5">2.5 Εξωτερικό CSS (External CSS)</a></li>
+                </ul>
+            </div>
+
+            <h1 id="section-1">2.1 Εισαγωγή στην HTML</h1>
+
+            <h2>Τι είναι η HTML;</h2>
+
+            <div class="highlight-box">
+                <h4>🔍 HTML - HyperText Markup Language</h4>
+                <p>Η <strong>HTML</strong> είναι η βασική γλώσσα σήμανσης για τη δημιουργία ιστοσελίδων. Δεν είναι γλώσσα προγραμματισμού, αλλά <strong>markup language</strong> που:</p>
+                <ul>
+                    <li><strong>Δομεί το περιεχόμενο:</strong> Καθορίζει τι είναι κάθε στοιχείο (τίτλος, παράγραφος, εικόνα)</li>
+                    <li><strong>Δημιουργεί συνδέσμους:</strong> Επιτρέπει τη σύνδεση σελίδων μεταξύ τους</li>
+                    <li><strong>Ενσωματώνει πολυμέσα:</strong> Εικόνες, βίντεο, ήχο</li>
+                    <li><strong>Παρέχει σημασιολογία:</strong> Δίνει νόημα στο περιεχόμενο για browsers και search engines</li>
+                </ul>
+            </div>
+
+            <h3>Ιστορία της HTML</h3>
+
+            <div class="timeline">
+                <h4>📅 Εξέλιξη HTML</h4>
+                <ul>
+                    <li><strong>1991:</strong> HTML 1.0 - Πρώτη έκδοση από Tim Berners-Lee</li>
+                    <li><strong>1995:</strong> HTML 2.0 - Πρώτο RFC standard</li>
+                    <li><strong>1997:</strong> HTML 3.2 - Υποστήριξη για tables, applets</li>
+                    <li><strong>1999:</strong> HTML 4.01 - Διαχωρισμός περιεχομένου από παρουσίαση</li>
+                    <li><strong>2000:</strong> XHTML 1.0 - XML-based HTML</li>
+                    <li><strong>2014:</strong> HTML5 - Σύγχρονα στοιχεία, APIs, πολυμέσα</li>
+                    <li><strong>Σήμερα:</strong> Living Standard - Συνεχής εξέλιξη</li>
+                </ul>
+            </div>
+
+            <h1 id="section-2">2.2 Βασικά Στοιχεία HTML</h1>
+
+            <div class="intro-section">
+                <h2>📖 Βασικές Έννοιες HTML</h2>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>Τι σημαίνει HTML;</h4>
+                        <p><strong>Hyper Text Markup Language</strong> - Γλώσσα Σήμανσης Υπερκειμένου</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Τι κάνει;</h4>
+                        <p>Περιγράφει τη <strong>δομή</strong> μιας ιστοσελίδας</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Πώς λειτουργεί;</h4>
+                        <p>Αποτελείται από <strong>στοιχεία</strong> (elements)</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Για ποιον;</h4>
+                        <p>Λέει στον <strong>browser</strong> πώς να εμφανίσει το περιεχόμενο</p>
+                    </div>
+                </div>
+
+                <h3>🎯 Ένα Απλό Παράδειγμα</h3>
+                <div class="code-block"><span class="keyword">&lt;!DOCTYPE</span> <span class="attr">html</span><span class="keyword">&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;title&gt;</span><span class="text">Τίτλος Σελίδας</span><span class="tag">&lt;/title&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1&gt;</span><span class="text">Η Πρώτη μου Επικεφαλίδα</span><span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;p&gt;</span><span class="text">Η πρώτη μου παράγραφος.</span><span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></div>
+
+                <h3>📝 Επεξήγηση Παραδείγματος</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Στοιχείο</th>
+                            <th>Περιγραφή</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="inline-code">&lt;!DOCTYPE html&gt;</span></td>
+                            <td>Δηλώνει ότι το έγγραφο είναι <strong>HTML5</strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">&lt;html&gt;</span></td>
+                            <td>Το <strong>βασικό στοιχείο</strong> μιας σελίδας HTML</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">&lt;head&gt;</span></td>
+                            <td>Περιέχει <strong>μεταδεδομένα</strong> για τη σελίδα</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">&lt;title&gt;</span></td>
+                            <td>Ο <strong>τίτλος</strong> που εμφανίζεται στην καρτέλα του browser</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">&lt;body&gt;</span></td>
+                            <td>Το <strong>σώμα</strong> με όλο το ορατό περιεχόμενο</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">&lt;h1&gt;</span></td>
+                            <td>Μια <strong>μεγάλη επικεφαλίδα</strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">&lt;p&gt;</span></td>
+                            <td>Μια <strong>παράγραφος</strong> κειμένου</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>🔍 Αναλυτικό Παράδειγμα με Σχόλια</h3>
+                <div class="code-block"><span class="comment">&lt;!-- Δηλώνει ότι το έγγραφο είναι γραμμένο σε HTML5 --&gt;</span>
+<span class="keyword">&lt;!DOCTYPE</span> <span class="attr">html</span><span class="keyword">&gt;</span>
+<span class="comment">&lt;!-- Αρχή του HTML εγγράφου --&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="comment">&lt;!-- Τμήμα που περιέχει πληροφορίες για τη σελίδα (όχι ορατές στον χρήστη) --&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="comment">&lt;!-- Ο τίτλος της σελίδας, εμφανίζεται στην καρτέλα του browser --&gt;</span>
+    <span class="tag">&lt;title&gt;</span><span class="text">Τίτλος Σελίδας</span><span class="tag">&lt;/title&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="comment">&lt;!-- Το κύριο μέρος της σελίδας, ό,τι βλέπει ο χρήστης --&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="comment">&lt;!-- Επικεφαλίδα πρώτου επιπέδου (ο πιο σημαντικός τίτλος στη σελίδα) --&gt;</span>
+    <span class="tag">&lt;h1&gt;</span><span class="text">Η Πρώτη μου Επικεφαλίδα</span><span class="tag">&lt;/h1&gt;</span>
+    <span class="comment">&lt;!-- Μία παράγραφος κειμένου --&gt;</span>
+    <span class="tag">&lt;p&gt;</span><span class="text">Η πρώτη μου παράγραφος.</span><span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="comment">&lt;!-- Τέλος του HTML εγγράφου --&gt;</span>
+<span class="tag">&lt;/html&gt;</span></div>
+
+                <h3>📝 Βασικά Παραδείγματα HTML</h3>
+                <p>Σε αυτή την ενότητα θα δούμε μερικά βασικά παραδείγματα HTML. Μην ανησυχείτε αν χρησιμοποιούμε tags που δεν έχετε μάθει ακόμα - θα τα δούμε αναλυτικά παρακάτω.</p>
+
+                <h4>📄 Έγγραφα HTML</h4>
+                <div class="highlight-box">
+                    <p>Όλα τα έγγραφα HTML πρέπει να ξεκινούν με μια δήλωση τύπου εγγράφου: <span class="inline-code">&lt;!DOCTYPE html&gt;</span>.</p>
+                    <ul>
+                        <li>Το HTML έγγραφο ξεκινά με <span class="inline-code">&lt;html&gt;</span> και τελειώνει με <span class="inline-code">&lt;/html&gt;</span></li>
+                        <li>Το ορατό μέρος του εγγράφου βρίσκεται μεταξύ <span class="inline-code">&lt;body&gt;</span> και <span class="inline-code">&lt;/body&gt;</span></li>
+                    </ul>
+                </div>
+
+                <div class="code-block"><span class="keyword">&lt;!DOCTYPE</span> <span class="attr">html</span><span class="keyword">&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1&gt;</span><span class="text">Η Πρώτη μου Επικεφαλίδα</span><span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;p&gt;</span><span class="text">Η πρώτη μου παράγραφος.</span><span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></div>
+
+                <h4>⚡ Η Δήλωση &lt;!DOCTYPE&gt;</h4>
+                <div class="protocol-box">
+                    <p>Η δήλωση <span class="inline-code">&lt;!DOCTYPE&gt;</span> αντιπροσωπεύει τον τύπο του εγγράφου και βοηθά τους browsers να εμφανίσουν τις ιστοσελίδες σωστά.</p>
+                    <ul>
+                        <li>Πρέπει να εμφανίζεται <strong>μόνο μία φορά</strong>, στην κορυφή της σελίδας (πριν από οποιαδήποτε HTML tags)</li>
+                        <li>Η δήλωση <span class="inline-code">&lt;!DOCTYPE&gt;</span> <strong>δεν είναι case sensitive</strong></li>
+                        <li>Για HTML5: <span class="inline-code">&lt;!DOCTYPE html&gt;</span></li>
+                    </ul>
+                </div>
+
+                <h4>📌 Επικεφαλίδες HTML (Headings)</h4>
+                <p>Οι επικεφαλίδες HTML ορίζονται με τα tags <span class="inline-code">&lt;h1&gt;</span> έως <span class="inline-code">&lt;h6&gt;</span>.</p>
+                <p><span class="inline-code">&lt;h1&gt;</span> ορίζει την πιο σημαντική επικεφαλίδα. <span class="inline-code">&lt;h6&gt;</span> ορίζει την λιγότερο σημαντική:</p>
+
+                <div class="code-block">&lt;h1&gt;Αυτή είναι επικεφαλίδα 1&lt;/h1&gt;
+&lt;h2&gt;Αυτή είναι επικεφαλίδα 2&lt;/h2&gt;
+&lt;h3&gt;Αυτή είναι επικεφαλίδα 3&lt;/h3&gt;</div>
+
+                <div class="live-example">
+                    <h4>📺 Προεπισκόπηση:</h4>
+                    <h1 style="margin: 10px 0;">Αυτή είναι επικεφαλίδα 1</h1>
+                    <h2 style="margin: 10px 0;">Αυτή είναι επικεφαλίδα 2</h2>
+                    <h3 style="margin: 10px 0;">Αυτή είναι επικεφαλίδα 3</h3>
+                </div>
+
+                <h4>📝 Παράγραφοι HTML</h4>
+                <p>Οι παράγραφοι HTML ορίζονται με το tag <span class="inline-code">&lt;p&gt;</span>:</p>
+
+                <div class="code-block">&lt;p&gt;Αυτή είναι μια παράγραφος.&lt;/p&gt;
+&lt;p&gt;Αυτή είναι μια άλλη παράγραφος.&lt;/p&gt;</div>
+
+                <h4>🔗 Σύνδεσμοι HTML (Links)</h4>
+                <p>Οι σύνδεσμοι HTML ορίζονται με το tag <span class="inline-code">&lt;a&gt;</span>:</p>
+
+                <div class="code-block">&lt;a href="https://www.example.com"&gt;Αυτός είναι ένας σύνδεσμος&lt;/a&gt;</div>
+
+                <div class="highlight-box">
+                    <p>Ο προορισμός του συνδέσμου καθορίζεται στο <strong>attribute</strong> <span class="inline-code">href</span>.</p>
+                    <p><strong>Τα attributes</strong> χρησιμοποιούνται για να παρέχουν πρόσθετες πληροφορίες για τα HTML στοιχεία.</p>
+                </div>
+
+                <h4>🖼️ Εικόνες HTML</h4>
+                <p>Οι εικόνες HTML ορίζονται με το tag <span class="inline-code">&lt;img&gt;</span>.</p>
+                <p>Το αρχείο προέλευσης (<span class="inline-code">src</span>), το εναλλακτικό κείμενο (<span class="inline-code">alt</span>), το πλάτος (<span class="inline-code">width</span>) και το ύψος (<span class="inline-code">height</span>) παρέχονται ως attributes:</p>
+
+                <div class="code-block">&lt;img src="https://ds.uop.gr/sites/default/files/styles/large/public/images/2024-03/logo-ds-el.png?itok=ASurM2gU" alt="Τμήμα Ψηφιακών Συστημάτων" width="300" height="200"&gt;</div>
+
+                <h4>🔍 Πώς να δείτε τον Κώδικα HTML μιας Σελίδας</h4>
+                <div class="architecture-box">
+                    <p>Σας έχει τύχει ποτέ να δείτε μια ιστοσελίδα και να αναρωτηθείτε "Πώς το έκαναν αυτό;"</p>
+                    
+                    <h4>Δύο τρόποι:</h4>
+                    <ul>
+                        <li><strong>Προβολή Πηγαίου Κώδικα HTML:</strong>
+                            <ul>
+                                <li>Πατήστε <kbd>Ctrl + U</kbd> (Windows/Linux) ή <kbd>Cmd + Option + U</kbd> (Mac)</li>
+                                <li>Ή κάντε δεξί κλικ στη σελίδα και επιλέξτε "View Page Source"</li>
+                                <li>Θα ανοίξει νέα καρτέλα με τον πηγαίο κώδικα HTML</li>
+                            </ul>
+                        </li>
+                        <li><strong>Επιθεώρηση Στοιχείου (Inspect):</strong>
+                            <ul>
+                                <li>Κάντε δεξί κλικ σε ένα στοιχείο και επιλέξτε "Inspect" ή "Επιθεώρηση"</li>
+                                <li>Θα δείτε τόσο το HTML όσο και το CSS</li>
+                                <li>Μπορείτε να επεξεργαστείτε τον κώδικα σε πραγματικό χρόνο!</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h1 id="section-3">2.3 Inline CSS με το attribute <code>style</code></h1>
+
+            <h2>🎨 Το attribute `style` στην HTML</h2>
+
+            <h3>🔹 Τι είναι το `style`</h3>
+            <div class="highlight-box">
+                <p>Η HTML περιγράφει τη <strong>δομή</strong> μιας σελίδας (τι περιέχει: παραγράφους, εικόνες, τίτλους κ.λπ.). Όμως από μόνη της δεν καθορίζει την εμφάνιση — όλα φαίνονται με το ίδιο μαύρο κείμενο σε λευκό φόντο.</p>
+                <p>Για να αλλάξουμε πώς φαίνονται τα στοιχεία, χρησιμοποιούμε το attribute <span class="inline-code">style</span>.</p>
+                <p>Το <span class="inline-code">style</span> μάς επιτρέπει να εφαρμόσουμε CSS κανόνες απευθείας μέσα στο στοιχείο. Είναι δηλαδή ένας τρόπος να γράψουμε CSS "μέσα" στην HTML.</p>
+            </div>
+
+            <h3>🔹 Σύνταξη</h3>
+            <div class="code-block">&lt;tagname style="property:value;"&gt;</div>
+
+            <ul>
+                <li><span class="inline-code">tagname</span> → το στοιχείο που θέλουμε να μορφοποιήσουμε (π.χ. <span class="inline-code">p</span>, <span class="inline-code">h1</span>, <span class="inline-code">div</span>, <span class="inline-code">a</span>)</li>
+                <li><span class="inline-code">property</span> → το όνομα μιας ιδιότητας CSS (π.χ. <span class="inline-code">color</span>, <span class="inline-code">font-size</span>, <span class="inline-code">background-color</span>)</li>
+                <li><span class="inline-code">value</span> → η τιμή αυτής της ιδιότητας (π.χ. <span class="inline-code">red</span>, <span class="inline-code">20px</span>, <span class="inline-code">tomato</span>)</li>
+            </ul>
+
+            <p>Κάθε ιδιότητα χωρίζεται με ελληνικό ερωτηματικό (;) όταν έχεις πολλές:</p>
+
+            <div class="code-block">&lt;p style="color:red; font-size:20px; text-align:center;"&gt;
+  Παράδειγμα κειμένου
+&lt;/p&gt;</div>
+
+            <h3>🔹 Τι ιδιότητες μπορούμε να αλλάξουμε</h3>
+            <p>Μπορούμε να ελέγξουμε σχεδόν τα πάντα στην εμφάνιση ενός στοιχείου, για παράδειγμα:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ιδιότητα</th>
+                        <th>Περιγραφή</th>
+                        <th>Παράδειγμα</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="inline-code">color</span></td>
+                        <td>Χρώμα του κειμένου</td>
+                        <td><span class="inline-code">color:blue;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inline-code">background-color</span></td>
+                        <td>Χρώμα φόντου</td>
+                        <td><span class="inline-code">background-color:yellow;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inline-code">font-size</span></td>
+                        <td>Μέγεθος γραμματοσειράς</td>
+                        <td><span class="inline-code">font-size:24px;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inline-code">font-family</span></td>
+                        <td>Τύπος γραμματοσειράς</td>
+                        <td><span class="inline-code">font-family:Arial;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inline-code">text-align</span></td>
+                        <td>Στοίχιση του κειμένου</td>
+                        <td><span class="inline-code">text-align:center;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inline-code">border</span></td>
+                        <td>Περίγραμμα γύρω από στοιχείο</td>
+                        <td><span class="inline-code">border:1px solid black;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inline-code">margin</span></td>
+                        <td>Εξωτερικό κενό</td>
+                        <td><span class="inline-code">margin:20px;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inline-code">padding</span></td>
+                        <td>Εσωτερικό κενό</td>
+                        <td><span class="inline-code">padding:10px;</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="protocol-box">
+                <h4>📘 Σημείωση</h4>
+                <p>Όλες αυτές είναι <strong>CSS ιδιότητες</strong> — και το <span class="inline-code">style</span> είναι απλώς ένας τρόπος να τις γράψουμε μέσα στο HTML.</p>
+            </div>
+
+            <h3>🔹 Πλεονεκτήματα και μειονεκτήματα</h3>
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>✅ Πλεονεκτήματα:</h4>
+                    <ul>
+                        <li>Εύκολο και γρήγορο για μικρά παραδείγματα ή δοκιμές</li>
+                        <li>Δεν χρειάζεται ξεχωριστό αρχείο CSS</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>❌ Μειονεκτήματα:</h4>
+                    <ul>
+                        <li>Αν έχεις πολλές γραμμές HTML, τα στυλ "σκορπίζονται" παντού</li>
+                        <li>Δύσκολο να αλλάξεις κάτι παντού (π.χ. αν θες όλα τα <span class="inline-code">p</span> να αλλάξουν χρώμα)</li>
+                        <li>Δεν είναι καθαρός τρόπος για μεγάλες ιστοσελίδες</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>💻 Παράδειγμα 1 — Inline Style σε διαφορετικά στοιχεία</h3>
+            <div class="code-block"><span class="keyword">&lt;!DOCTYPE</span> <span class="attr">html</span><span class="keyword">&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;title&gt;</span><span class="text">Παράδειγμα Inline Styling</span><span class="tag">&lt;/title&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+
+    <span class="tag">&lt;h1</span> <span class="attr">style</span><span class="text">=</span><span class="value">"color:blue;"</span><span class="tag">&gt;</span><span class="text">Αυτός είναι ένας τίτλος</span><span class="tag">&lt;/h1&gt;</span>
+
+    <span class="tag">&lt;p</span> <span class="attr">style</span><span class="text">=</span><span class="value">"color:red; font-size:20px;"</span><span class="tag">&gt;</span>
+      <span class="text">Αυτή είναι μια παράγραφος με κόκκινο χρώμα και μεγαλύτερο μέγεθος.</span>
+    <span class="tag">&lt;/p&gt;</span>
+
+    <span class="tag">&lt;p</span> <span class="attr">style</span><span class="text">=</span><span class="value">"text-align:center; background-color:yellow;"</span><span class="tag">&gt;</span>
+      <span class="text">Αυτή η παράγραφος είναι στο κέντρο και έχει κίτρινο φόντο.</span>
+    <span class="tag">&lt;/p&gt;</span>
+
+    <span class="tag">&lt;a</span> <span class="attr">href</span><span class="text">=</span><span class="value">"#"</span> <span class="attr">style</span><span class="text">=</span><span class="value">"color:white; background-color:green; padding:10px; text-decoration:none; border-radius:6px;"</span><span class="tag">&gt;</span>
+      <span class="text">Αυτός είναι ένας σύνδεσμος με στυλ κουμπιού</span>
+    <span class="tag">&lt;/a&gt;</span>
+
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></div>
+
+            <div class="exercises">
+                <h4>✳️ Τι να δοκιμάσεις</h4>
+                <ol>
+                    <li>Άλλαξε το <span class="inline-code">color</span> σε <span class="inline-code">purple</span>.</li>
+                    <li>Αύξησε το <span class="inline-code">font-size</span> από <span class="inline-code">20px</span> σε <span class="inline-code">30px</span>.</li>
+                    <li>Βάλε <span class="inline-code">background-color: lightblue;</span> στο <span class="inline-code">&lt;body&gt;</span>.</li>
+                    <li>Δες πώς αλλάζει άμεσα η εμφάνιση στον browser.</li>
+                </ol>
+            </div>
+
+            <h1 id="section-4">2.4 Εσωτερικό CSS (Internal CSS)</h1>
+
+            <p>Ας περάσουμε τώρα στο δεύτερο βήμα: το εσωτερικό CSS (Internal CSS). Εδώ αρχίζουμε να ξεχωρίζουμε τη μορφοποίηση από τη δομή της HTML — ένα μεγάλο βήμα προς τον "σωστό" τρόπο γραφής ιστοσελίδων.</p>
+
+            <h3>🔹 Τι είναι το εσωτερικό CSS</h3>
+            <div class="highlight-box">
+                <p>Το <strong>εσωτερικό CSS</strong> είναι ένας τρόπος να γράψουμε κανόνες CSS μέσα στην ίδια HTML σελίδα, αλλά όχι μέσα στα στοιχεία. Αντί να χρησιμοποιούμε <span class="inline-code">style="..."</span> σε κάθε tag, γράφουμε τους κανόνες μια φορά μέσα στο <span class="inline-code">&lt;style&gt;</span> tag, το οποίο τοποθετείται στο <span class="inline-code">&lt;head&gt;</span>.</p>
+            </div>
+
+            <h3>🔹 Γιατί το χρησιμοποιούμε</h3>
+            <ul>
+                <li>Μας επιτρέπει να αλλάζουμε το στυλ πολλών στοιχείων ταυτόχρονα, χωρίς να επαναλαμβάνουμε κώδικα.</li>
+                <li>Κρατάει τον κώδικα πιο καθαρό και οργανωμένο από τα inline styles.</li>
+                <li>Είναι κατάλληλο για μικρές ή μεμονωμένες σελίδες.</li>
+            </ul>
+
+            <h3>🔹 Σύνταξη</h3>
+            <p>Το εσωτερικό CSS γράφεται μέσα στο tag <span class="inline-code">&lt;style&gt;</span>:</p>
+
+            <div class="code-block">&lt;head&gt;
+  &lt;style&gt;
+    selector {
+      property: value;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;</div>
+
+            <ul>
+                <li><span class="inline-code">selector</span> → δηλώνει ποιο στοιχείο HTML επηρεάζεται (π.χ. <span class="inline-code">p</span>, <span class="inline-code">h1</span>, <span class="inline-code">body</span>)</li>
+                <li><span class="inline-code">property</span> → η ιδιότητα CSS που θέλουμε να αλλάξουμε</li>
+                <li><span class="inline-code">value</span> → η τιμή αυτής της ιδιότητας</li>
+            </ul>
+
+            <h3>🔹 Παράδειγμα</h3>
+            <p>Ας μετατρέψουμε το προηγούμενο inline παράδειγμα σε internal CSS:</p>
+
+            <div class="code-block"><span class="keyword">&lt;!DOCTYPE</span> <span class="attr">html</span><span class="keyword">&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;title&gt;</span><span class="text">Παράδειγμα Εσωτερικού CSS</span><span class="tag">&lt;/title&gt;</span>
+
+    <span class="comment">&lt;!-- Εδώ γράφουμε το CSS --&gt;</span>
+    <span class="tag">&lt;style&gt;</span>
+      <span class="keyword">body</span> {
+        <span class="attr">background-color</span>: <span class="value">lightyellow</span>;
+        <span class="attr">font-family</span>: <span class="value">Arial, sans-serif</span>;
+      }
+
+      <span class="keyword">h1</span> {
+        <span class="attr">color</span>: <span class="value">blue</span>;
+        <span class="attr">text-align</span>: <span class="value">center</span>;
+      }
+
+      <span class="keyword">p</span> {
+        <span class="attr">color</span>: <span class="value">red</span>;
+        <span class="attr">font-size</span>: <span class="value">20px</span>;
+      }
+
+      <span class="keyword">.highlight</span> {
+        <span class="attr">text-align</span>: <span class="value">center</span>;
+        <span class="attr">background-color</span>: <span class="value">yellow</span>;
+      }
+
+      <span class="keyword">a</span> {
+        <span class="attr">color</span>: <span class="value">white</span>;
+        <span class="attr">background-color</span>: <span class="value">green</span>;
+        <span class="attr">padding</span>: <span class="value">10px</span>;
+        <span class="attr">text-decoration</span>: <span class="value">none</span>;
+        <span class="attr">border-radius</span>: <span class="value">6px</span>;
+      }
+
+      <span class="keyword">a:hover</span> {
+        <span class="attr">background-color</span>: <span class="value">darkgreen</span>;
+      }
+    <span class="tag">&lt;/style&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1&gt;</span><span class="text">Αυτός είναι ένας τίτλος</span><span class="tag">&lt;/h1&gt;</span>
+
+    <span class="tag">&lt;p&gt;</span><span class="text">Αυτή είναι μια παράγραφος με κόκκινο χρώμα και μεγαλύτερο μέγεθος.</span><span class="tag">&lt;/p&gt;</span>
+
+    <span class="tag">&lt;p</span> <span class="attr">class</span><span class="text">=</span><span class="value">"highlight"</span><span class="tag">&gt;</span><span class="text">Αυτή η παράγραφος είναι στο κέντρο και έχει κίτρινο φόντο.</span><span class="tag">&lt;/p&gt;</span>
+
+    <span class="tag">&lt;a</span> <span class="attr">href</span><span class="text">=</span><span class="value">"#"</span><span class="tag">&gt;</span><span class="text">Αυτός είναι ένας σύνδεσμος με στυλ κουμπιού</span><span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></div>
+
+            <h3>🔹 Τι βλέπουμε εδώ</h3>
+            <ul>
+                <li>Όλα τα στυλ είναι μαζεμένα στο <span class="inline-code">&lt;style&gt;</span>, όχι διασκορπισμένα.</li>
+                <li>Αν θέλεις να αλλάξεις το χρώμα όλων των παραγράφων, απλώς αλλάζεις το <span class="inline-code">p { color: red; }</span> μία φορά.</li>
+                <li>Προσθέσαμε και CSS class (<span class="inline-code">class="highlight"</span>) για να στοχεύσουμε συγκεκριμένα στοιχεία.</li>
+            </ul>
+
+            <h3>🔹 Πλεονεκτήματα και Μειονεκτήματα</h3>
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>✅ Πλεονεκτήματα:</h4>
+                    <ul>
+                        <li>Καθαρός και οργανωμένος κώδικας</li>
+                        <li>Εύκολη αλλαγή στυλ σε πολλά στοιχεία</li>
+                        <li>Καλύτερη απόδοση από τα inline styles</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>❌ Μειονεκτήματα:</h4>
+                    <ul>
+                        <li>Αν έχεις πολλές HTML σελίδες, πρέπει να αντιγράψεις το ίδιο <span class="inline-code">&lt;style&gt;</span> σε όλες</li>
+                        <li>Δεν είναι πρακτικό για μεγάλα sites — εκεί θα περάσουμε στο εξωτερικό CSS</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h1 id="section-5">2.5 Εξωτερικό CSS (External CSS)</h1>
+
+            <div class="highlight-box">
+                <h4>🌟 Ο Επαγγελματικός Τρόπος</h4>
+                <p>Αυτός είναι ο πιο επαγγελματικός και καθαρός τρόπος να βάζεις στυλ σε ιστοσελίδες, και είναι ο τρόπος που χρησιμοποιείται σε πραγματικά websites.</p>
+            </div>
+
+            <h3>🔹 Τι είναι το Εξωτερικό CSS</h3>
+            <div class="architecture-box">
+                <p>Στο <strong>εξωτερικό CSS</strong>, ο κώδικας των στυλ γράφεται σε ξεχωριστό αρχείο (συνήθως με κατάληξη <span class="inline-code">.css</span>). Η HTML δεν περιέχει καθόλου κανόνες στυλ μέσα της, απλώς "συνδέεται" με το CSS αρχείο μέσω ενός link στο <span class="inline-code">&lt;head&gt;</span>.</p>
+                
+                <h4>Έτσι έχουμε:</h4>
+                <ul>
+                    <li><strong>HTML</strong> = Δομή και περιεχόμενο</li>
+                    <li><strong>CSS</strong> = Εμφάνιση και στυλ</li>
+                </ul>
+            </div>
+
+            <h3>🔹 Γιατί να το χρησιμοποιήσεις</h3>
+            <div class="pros">
+                <h4>✅ Πλεονεκτήματα του Εξωτερικού CSS:</h4>
+                <ul>
+                    <li>Καθαρός, οργανωμένος κώδικας</li>
+                    <li>Ίδιο CSS για πολλές σελίδες (π.χ. header, footer, χρώματα)</li>
+                    <li>Ευκολία στη συντήρηση — αλλάζεις κάτι μία φορά, και ενημερώνονται όλες οι σελίδες</li>
+                    <li>Είναι το πρότυπο για επαγγελματικά projects</li>
+                </ul>
+            </div>
+
+            <h3>🔹 Πώς το συνδέουμε</h3>
+            <p>Στο <span class="inline-code">&lt;head&gt;</span> του HTML αρχείου γράφουμε:</p>
+
+            <div class="code-block">&lt;link rel="stylesheet" href="style.css"&gt;</div>
+
+            <div class="protocol-box">
+                <h4>👉 Τι σημαίνει αυτό;</h4>
+                <p>Αυτό λέει στον browser: <strong>"Φόρτωσε το αρχείο style.css και εφάρμοσε τους κανόνες του σε αυτή τη σελίδα."</strong></p>
+            </div>
+
+            <h3>💻 Παράδειγμα — ίδιο με το προηγούμενο, αλλά με εξωτερικό CSS</h3>
+
+            <h4>📄 Αρχείο: <code>index.html</code></h4>
+            <div class="code-block"><span class="keyword">&lt;!DOCTYPE</span> <span class="attr">html</span><span class="keyword">&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span><span class="text">=</span><span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span><span class="text">Παράδειγμα Εξωτερικού CSS</span><span class="tag">&lt;/title&gt;</span>
+
+    <span class="comment">&lt;!-- Συνδέουμε το αρχείο CSS --&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attr">rel</span><span class="text">=</span><span class="value">"stylesheet"</span> <span class="attr">href</span><span class="text">=</span><span class="value">"style.css"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1&gt;</span><span class="text">Αυτός είναι ένας τίτλος</span><span class="tag">&lt;/h1&gt;</span>
+
+    <span class="tag">&lt;p&gt;</span><span class="text">Αυτή είναι μια παράγραφος με κόκκινο χρώμα και μεγαλύτερο μέγεθος.</span><span class="tag">&lt;/p&gt;</span>
+
+    <span class="tag">&lt;p</span> <span class="attr">class</span><span class="text">=</span><span class="value">"highlight"</span><span class="tag">&gt;</span>
+      <span class="text">Αυτή η παράγραφος είναι στο κέντρο και έχει κίτρινο φόντο.</span>
+    <span class="tag">&lt;/p&gt;</span>
+
+    <span class="tag">&lt;a</span> <span class="attr">href</span><span class="text">=</span><span class="value">"#"</span><span class="tag">&gt;</span><span class="text">Αυτός είναι ένας σύνδεσμος με στυλ κουμπιού</span><span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></div>
+
+            <h4>📄 Αρχείο: <code>style.css</code></h4>
+            <div class="code-block"><span class="comment">/* Ολόκληρη η σελίδα */</span>
+<span class="keyword">body</span> {
+  <span class="attr">background-color</span>: <span class="value">lightyellow</span>;
+  <span class="attr">font-family</span>: <span class="value">Arial, sans-serif</span>;
+}
+
+<span class="comment">/* Τίτλος */</span>
+<span class="keyword">h1</span> {
+  <span class="attr">color</span>: <span class="value">blue</span>;
+  <span class="attr">text-align</span>: <span class="value">center</span>;
+}
+
+<span class="comment">/* Όλες οι παράγραφοι */</span>
+<span class="keyword">p</span> {
+  <span class="attr">color</span>: <span class="value">red</span>;
+  <span class="attr">font-size</span>: <span class="value">20px</span>;
+}
+
+<span class="comment">/* Παράγραφοι με κλάση "highlight" */</span>
+<span class="keyword">.highlight</span> {
+  <span class="attr">text-align</span>: <span class="value">center</span>;
+  <span class="attr">background-color</span>: <span class="value">yellow</span>;
+}
+
+<span class="comment">/* Σύνδεσμος */</span>
+<span class="keyword">a</span> {
+  <span class="attr">color</span>: <span class="value">white</span>;
+  <span class="attr">background-color</span>: <span class="value">green</span>;
+  <span class="attr">padding</span>: <span class="value">10px</span>;
+  <span class="attr">text-decoration</span>: <span class="value">none</span>;
+  <span class="attr">border-radius</span>: <span class="value">6px</span>;
+}
+
+<span class="comment">/* Όταν περνάει το ποντίκι από πάνω */</span>
+<span class="keyword">a:hover</span> {
+  <span class="attr">background-color</span>: <span class="value">darkgreen</span>;
+}</div>
+
+            <h3>🔹 Πώς λειτουργεί</h3>
+            <div class="timeline">
+                <h4>📋 Διαδικασία Φόρτωσης</h4>
+                <ul>
+                    <li><strong>Βήμα 1:</strong> Ο browser διαβάζει πρώτα την HTML (<span class="inline-code">index.html</span>)</li>
+                    <li><strong>Βήμα 2:</strong> Βλέπει το <span class="inline-code">&lt;link rel="stylesheet" href="style.css"&gt;</span></li>
+                    <li><strong>Βήμα 3:</strong> Ανοίγει το αρχείο <span class="inline-code">style.css</span></li>
+                    <li><strong>Βήμα 4:</strong> Εφαρμόζει τους κανόνες CSS στα στοιχεία της σελίδας</li>
+                </ul>
+            </div>
+
+            <h3>🎨 Σύγκριση των 3 Τρόπων CSS</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Τύπος CSS</th>
+                        <th>Πού γράφεται</th>
+                        <th>Χρήση</th>
+                        <th>Πλεονέκτημα</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Inline CSS</strong></td>
+                        <td>Μέσα στο HTML element με <span class="inline-code">style=""</span></td>
+                        <td>Δοκιμές, μικρές αλλαγές</td>
+                        <td>Γρήγορο και άμεσο</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Internal CSS</strong></td>
+                        <td>Στο <span class="inline-code">&lt;head&gt;</span> με <span class="inline-code">&lt;style&gt;</span></td>
+                        <td>Μεμονωμένες σελίδες</td>
+                        <td>Οργανωμένο για μία σελίδα</td>
+                    </tr>
+                    <tr>
+                        <td><strong>External CSS</strong></td>
+                        <td>Σε ξεχωριστό αρχείο <span class="inline-code">.css</span></td>
+                        <td>Επαγγελματικά projects</td>
+                        <td>Επαναχρησιμοποίηση, συντήρηση</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="exercises">
+                <h4>✳️ Άσκηση: Δημιούργησε το δικό σου External CSS</h4>
+                <ol>
+                    <li>Δημιούργησε ένα αρχείο <span class="inline-code">index.html</span></li>
+                    <li>Δημιούργησε ένα αρχείο <span class="inline-code">style.css</span> στον ίδιο φάκελο</li>
+                    <li>Σύνδεσε τα δύο αρχεία με το <span class="inline-code">&lt;link&gt;</span> tag</li>
+                    <li>Γράψε CSS κανόνες στο <span class="inline-code">style.css</span></li>
+                    <li>Άνοιξε το <span class="inline-code">index.html</span> στον browser και δες το αποτέλεσμα!</li>
+                </ol>
+            </div>
+
+            <div class="summary">
+                <h2>📋 Σύνοψη Ενότητας</h2>
+                <p>Σε αυτή την ενότητα μάθαμε τα θεμέλια της HTML και CSS, τα εργαλεία που χρησιμοποιούμε για να δημιουργήσουμε σύγχρονες ιστοσελίδες.</p>
+                
+                <h3>🎯 Βασικά σημεία:</h3>
+                <ul>
+                    <li><strong>HTML:</strong> Δομή και σημασιολογία περιεχομένου</li>
+                    <li><strong>HTML5:</strong> Σύγχρονα στοιχεία και APIs</li>
+                    <li><strong>Inline CSS:</strong> Στυλ με το style attribute (για δοκιμές)</li>
+                    <li><strong>Internal CSS:</strong> Στυλ με το &lt;style&gt; tag (για μεμονωμένες σελίδες)</li>
+                    <li><strong>External CSS:</strong> Στυλ σε ξεχωριστό αρχείο .css (επαγγελματικός τρόπος)</li>
+                    <li><strong>Selectors:</strong> Επιλογή στοιχείων για styling</li>
+                </ul>
+
+                <p><strong>Στην επόμενη ενότητα θα μάθουμε JavaScript για να κάνουμε τις σελίδες μας διαδραστικές!</strong></p>
+            </div>
+
+            <div class="exercises">
+                <h3>🔥 Ασκήσεις Εμπέδωσης</h3>
+                <ol>
+                    <li><strong>Δημιουργήστε μια βασική HTML σελίδα</strong> με τη δομή που μάθαμε (DOCTYPE, html, head, body)</li>
+                    <li><strong>Προσθέστε διάφορα στοιχεία</strong> όπως επικεφαλίδες, παραγράφους, συνδέσμους και εικόνες</li>
+                    <li><strong>Δοκιμάστε και τους 3 τρόπους CSS:</strong>
+                        <ul>
+                            <li>Ξεκινήστε με inline CSS</li>
+                            <li>Μετατρέψτε τα σε internal CSS</li>
+                            <li>Τέλος, μετακινήστε τα σε ξεχωριστό αρχείο external CSS</li>
+                        </ul>
+                    </li>
+                    <li><strong>Εξηγήστε τις διαφορές</strong> μεταξύ των τριών τρόπων CSS</li>
+                    <li><strong>Δημιουργήστε ένα mini-project:</strong> Μια σελίδα με 3 HTML files που όλα χρησιμοποιούν το ίδιο external CSS αρχείο</li>
+                </ol>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <span>Εισαγωγή στην HTML και CSS</span>
+                <span>Μπάρδης Γιώργος</span>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
